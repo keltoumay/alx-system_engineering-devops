@@ -33,23 +33,21 @@ defaults
 	errorfile 503 /etc/haproxy/errors/503.http
 	errorfile 504 /etc/haproxy/errors/504.http
 
-# start of parameters for www.ecosim.tech
 frontend ecosim-frontend
 	bind *:80
         mode http
         http-request redirect scheme https code 301 unless { ssl_fc }
-	http-request set-header X-Forwarded-Proto http
+	http-request set-header X_Forwarded-Proto http
 	default_backend	ecosim-backend
 
 
 frontend ecosim-frontend-https
 	bind *:443 ssl crt /etc/haproxy/certs/www.ecosim.tech.pem
 	http-request set-header X-Forwarded-Proto https
-        default_backend ecosim.tech
+        default_backend ecosim-backend
 
 
 backend ecosim-backend
         balance roundrobin
         server 408335-web-01 100.25.193.13:80 check
         server 408335-web-02 18.209.179.202:80 check
-# end of parameters
