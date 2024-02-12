@@ -7,8 +7,11 @@
 #   ufw-before-output
 #   ufw-before-forward
 #
+# NAT table rules
 *nat
 :PREROUTING ACCEPT [0:0]
+
+# FORWARD 8080 to 80
 -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
 COMMIT
 
